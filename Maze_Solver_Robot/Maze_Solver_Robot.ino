@@ -69,6 +69,9 @@ int Sensor_read2=0;
 void loop() {
 mazeSolve();
 delay(30000);
+pathIndex = 0;
+status = 0 ;
+End = 0;
 mazeOptimization ();
 
  

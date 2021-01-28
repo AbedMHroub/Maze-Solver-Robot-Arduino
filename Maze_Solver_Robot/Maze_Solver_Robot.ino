@@ -100,16 +100,22 @@ void mazeSolve(void)
            switch(var){
               case 1:  
                 forward();
+                delay(1000);
+                stop_();
                 Serial.println("forward");
                 break;
                 
               case 2:  
                 left();
+                delay(1000);
+                stop_();
                 Serial.println("left");
                 break;
                 
               case 3:
                 right();
+                delay(1000);
+                stop_();
                 Serial.println("right");
                 break;
                 
@@ -120,6 +126,8 @@ void mazeSolve(void)
                 
              case 5:
                 uTurn();
+                delay(1000);
+                stop_();
                 Serial.println("uTurn");
                 break;
                 

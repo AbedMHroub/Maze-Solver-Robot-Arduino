@@ -143,45 +143,39 @@ void test_dest () {
   ultraM();
   ultraR();
 
-    if(distanceL > 20 && distanceR < 20 && distanceM < 20 ) //Left Only
+    if((distanceL > 20 && distanceR < 20 && distanceM < 20)|| (distanceL > 20 && distanceR > 20 && distanceM < 20) || (distanceL > 20 && distanceR > 20 && distanceM < 20) || (distanceL > 20 && distanceR > 20 && distanceM > 20)  ) //Left Only
     {
       var = 2;
-      recIntersection('L');
+      if (path[pathLength-1]!= 'L')
+      {
+          recIntersection('L');
+          }
     }
     else if (distanceL < 20 && distanceR > 20 && distanceM < 20 )//Right Only
     {
       var = 3;
-      recIntersection('R');
+      if (path[pathLength-1]!= 'R')
+      {
+          recIntersection('R');
+          }
     }
     else if (distanceL < 20 && distanceR < 20 && distanceM < 20)//Dead End
     {
       var = 5;
-      recIntersection('B');
+      if (path[pathLength-1]!= 'B')
+      {
+          recIntersection('B');
+          }
     }
-    else if (distanceL < 20 && distanceR > 20 && distanceM > 20)//Straight or Right
+    else if ((distanceL < 20 && distanceR > 20 && distanceM > 20) ||(distanceL < 20 && distanceR < 20 && distanceM > 20) )//Straight or Right
     {
       var = 1;
-      recIntersection('S');
+      if (path[pathLength-1]!= 'S')
+      {
+          recIntersection('S');
+          }
     }
-    else if (distanceL > 20 && distanceR < 20 && distanceM > 20)//Straight or Left
-    {
-      var = 2;
-      recIntersection('L');
-    }
-    else if (distanceL > 20 && distanceR > 20 && distanceM < 20)//T Cross
-    {
-      var = 2;
-      recIntersection('L');
-    }
-    else if (distanceL > 20 && distanceR > 20 && distanceM > 20)//X Cross
-    {
-      var = 2;
-      recIntersection('L');
-    }
-    else if (distanceL < 20 && distanceR < 20 && distanceM > 20)//Straight
-    {
-      var = 1;
-    }
+    
   }
 
   void test_dest2 () {

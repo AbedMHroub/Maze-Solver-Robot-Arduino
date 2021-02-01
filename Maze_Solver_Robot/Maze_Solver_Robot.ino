@@ -74,19 +74,13 @@ int Sensor_read2=0;
  int counter=0;
  int dist=0; 
 
- 
-irrecv.enableIRIn(); 
+
 }
 
 
 void loop() {
 
-  if (irrecv.decode(&results))
-    {
-     Serial.println(results.value, HEX);
-     irrecv.resume(); // Receive the next value
-    }
-//mazeSolve();
+mazeSolve();
 /*delay(30000);
 pathIndex = 0;
 status = 0 ;

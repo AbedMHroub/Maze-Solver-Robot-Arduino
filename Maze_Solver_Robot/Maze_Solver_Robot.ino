@@ -287,7 +287,7 @@ void mazeTurn (char dir)
        break;
   }
 }
-/*
+
 void readLFSsensors(){
 
     val = digitalRead(irPin);     // read the input pin
@@ -299,7 +299,7 @@ void readLFSsensors(){
       else{
        //
       }
-}*/
+}
   
   
 void recIntersection(char direction)

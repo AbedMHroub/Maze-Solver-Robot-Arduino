@@ -11,6 +11,9 @@ int RECV_PIN = 13; // the pin where you connect the output pin of IR sensor
 IRrecv irrecv(RECV_PIN);
 decode_results results;   
 
+#define enableA 8 // left
+#define enableB 9 // right
+
 
 int End = 0;
 int irPin = 12; 
@@ -44,7 +47,9 @@ long distanceM;
 long durationM;
  int counter;
  int dist;
- 
+
+
+ char command;
 ////////////////
 char path[100] = " ";
 unsigned char pathLength = 0; // the length of the path
@@ -68,6 +73,10 @@ Serial.begin(9600);
  pinMode(echoPinM, INPUT);
  pinMode(irPin, INPUT);
 
+  pinMode(enableA, OUTPUT);
+  pinMode(enableB, OUTPUT);
+
+  
 int Sensor_read1=0;
 int Sensor_read2=0;
 
@@ -79,13 +88,18 @@ int Sensor_read2=0;
 
 
 void loop() {
+analogWrite(enableA, 120);
+analogWrite(enableB, 120);
+
+
+
 
 mazeSolve();
-/*delay(30000);
+delay(30000);
 pathIndex = 0;
 status = 0 ;
 End = 0;
-mazeOptimization ();*/
+mazeOptimization ();
 
  
 }
@@ -139,6 +153,13 @@ void mazeSolve(void)
                 stop_();
                 Serial.println("uTurn");
                 break;
+
+             case 6:
+                rr ();
+                delay(1000);
+                stop_();
+                Serial.println("back");
+                break;
                 
                default: 
                // if unwanted charachter
@@ -159,8 +180,24 @@ void test_dest () {
   ultraL();
   ultraM();
   ultraR();
-  s = s+1;
-    if(distanceL > 20 && distanceR < 20 && distanceM < 20 ) //Left Only
+ s = s+1;
+    if (distanceL <10 || distanceR <10 || distanceM <10 ){
+      stop_();
+      if (distanceL > 10 ){
+        left();}
+        else if (distanceR >10 ){
+          right();}
+          else {
+            forward();
+            }
+      
+      }
+    if (distanceL <10 || distanceR <10 || distanceM <10 ){
+      var = 2;
+      
+      
+      }
+    else if(distanceL > 20 && distanceR < 20 && distanceM < 20 ) //Left Only
     {
       var = 2;
       recIntersection('L');
@@ -198,6 +235,10 @@ void test_dest () {
     else if (distanceL < 20 && distanceR < 20 && distanceM > 20)//Straight
     {
       var = 1;
+    }
+    else if ((distanceL < 20 || distanceR < 20 || distanceM < 20)||(distanceL > 1000 || distanceR > 1000 || distanceM > 1000))//Straight
+    {
+      var = 6;
     }
   }
 
@@ -258,7 +299,7 @@ void mazeTurn (char dir)
        break;
   }
 }
-/*
+
 void readLFSsensors(){
 
     val = digitalRead(irPin);     // read the input pin
@@ -270,7 +311,7 @@ void readLFSsensors(){
       else{
        //
       }
-}*/
+}
   
   
 void recIntersection(char direction)
@@ -344,70 +385,51 @@ void forward (){
   delay(1000);
 
   }
+
+  
+void rr (){
+  
+  digitalWrite(Motor_A_Reverse , HIGH ) ;
+  digitalWrite(Motor_A_Forward , LOW ) ;
+  digitalWrite(Motor_B_Reverse , HIGH ) ;
+  digitalWrite(Motor_B_Forward , LOW ) ;
+  delay(500);
+  digitalWrite(Motor_A_Reverse , LOW ) ;
+  digitalWrite(Motor_A_Forward , LOW ) ;
+  digitalWrite(Motor_B_Reverse , LOW ) ;
+  digitalWrite(Motor_B_Forward , LOW ) ; 
+  delay(1000);
+
+  }
  
 void left () {
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , HIGH ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , HIGH ) ;
-  delay(200);
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , LOW ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , LOW ) ; 
-  delay(500);
+  
   digitalWrite(Motor_A_Reverse , LOW ) ;
   digitalWrite(Motor_A_Forward , LOW ) ;
   digitalWrite(Motor_B_Reverse , LOW ) ;
   digitalWrite(Motor_B_Forward , HIGH ) ;
-  delay(200);
+  delay(100);
   digitalWrite(Motor_A_Reverse , LOW ) ;
   digitalWrite(Motor_A_Forward , LOW ) ;
   digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , LOW ) ; 
-  delay(500);
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , HIGH ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , HIGH ) ;
-  delay(200);
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , LOW ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , LOW ) ; 
+  digitalWrite(Motor_B_Forward , LOW ) ;
+  
   }
   
 void right (){
 
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , HIGH ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , HIGH ) ;
-  delay(200);
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , LOW ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , LOW ) ; 
-  delay(500);
+  
   digitalWrite(Motor_A_Reverse , LOW ) ;
   digitalWrite(Motor_A_Forward , HIGH ) ;
   digitalWrite(Motor_B_Reverse , LOW ) ;
   digitalWrite(Motor_B_Forward , LOW ) ;
-  delay(200);
+  delay(100);
   digitalWrite(Motor_A_Reverse , LOW ) ;
   digitalWrite(Motor_A_Forward , LOW ) ;
   digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , LOW ) ; 
-  delay(500);
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , HIGH ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , HIGH ) ;
-  delay(200);
-  digitalWrite(Motor_A_Reverse , LOW ) ;
-  digitalWrite(Motor_A_Forward , LOW ) ;
-  digitalWrite(Motor_B_Reverse , LOW ) ;
-  digitalWrite(Motor_B_Forward , LOW ) ; 
+  digitalWrite(Motor_B_Forward , LOW ) ;
+  
+ 
   }
 
 void uTurn (){
@@ -416,6 +438,7 @@ void uTurn (){
   digitalWrite(Motor_A_Forward , HIGH ) ;
   digitalWrite(Motor_B_Reverse , LOW ) ;
   digitalWrite(Motor_B_Forward , LOW ) ;
+  
   }
   
   void stop_ (){

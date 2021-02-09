@@ -1,5 +1,4 @@
 
-#include <IRremote.h>
 
 const int  p =20;
 int startTime;
@@ -8,8 +7,6 @@ int endTime;
 
 
 int RECV_PIN = 13; // the pin where you connect the output pin of IR sensor     
-IRrecv irrecv(RECV_PIN);
-decode_results results;   
 
 #define enableA 8 // left
 #define enableB 9 // right
@@ -95,11 +92,13 @@ analogWrite(enableB, 120);
 
 
 mazeSolve();
-delay(30000);
+
+
+/*delay(30000);
 pathIndex = 0;
 status = 0 ;
 End = 0;
-mazeOptimization ();
+mazeOptimization ();*/
 
  
 }
@@ -152,13 +151,6 @@ void mazeSolve(void)
                 delay(1000);
                 stop_();
                 Serial.println("uTurn");
-                break;
-
-             case 6:
-                rr ();
-                delay(1000);
-                stop_();
-                Serial.println("back");
                 break;
                 
                default: 
@@ -236,10 +228,6 @@ void test_dest () {
     {
       var = 1;
     }
-    else if ((distanceL < 20 || distanceR < 20 || distanceM < 20)||(distanceL > 1000 || distanceR > 1000 || distanceM > 1000))//Straight
-    {
-      var = 6;
-    }
   }
 
   void test_dest2 () {
@@ -299,7 +287,7 @@ void mazeTurn (char dir)
        break;
   }
 }
-
+/*
 void readLFSsensors(){
 
     val = digitalRead(irPin);     // read the input pin
@@ -311,7 +299,7 @@ void readLFSsensors(){
       else{
        //
       }
-}
+}*/
   
   
 void recIntersection(char direction)

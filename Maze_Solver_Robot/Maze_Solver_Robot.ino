@@ -114,14 +114,14 @@ void mazeSolve(void)
         distanceL= 9;
         */
         Serial.println("hi");
-       // readLFSsensors();
+        readLFSsensors();
         test_dest();
         Serial.println(distanceR);
         Serial.println(distanceL);
         Serial.println(distanceM);
         Serial.println(var);
         Serial.println(s);
-          //read_sensors ();**
+       // read_sensors ();
         
            switch(var){
               case 1:  
